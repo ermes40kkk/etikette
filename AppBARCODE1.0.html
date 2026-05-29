@@ -63,6 +63,53 @@
         margin-top: 8px;
       }
 
+      .input-with-stepper {
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+      }
+
+      .stepper-buttons {
+        display: flex;
+        flex-direction: column;
+        margin-right: 4px;
+      }
+
+      .stepper-button {
+        width: 28px;
+        min-width: 28px;
+        height: 18px;
+        padding: 0;
+        font-size: 11px;
+        line-height: 1;
+        border: 1px solid #000;
+        background: #fff;
+        cursor: pointer;
+      }
+
+      .stepper-button + .stepper-button {
+        border-top: 0;
+      }
+
+      .input-with-stepper input {
+        width: 100%;
+      }
+
+      .inline-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 5px;
+        font-size: 12px;
+        font-weight: 400;
+      }
+
+      .inline-checkbox input[type="checkbox"] {
+        width: 15px;
+        height: 15px;
+        margin: 0;
+      }
+
       .actions {
         margin-top: 12px;
         display: flex;
@@ -77,6 +124,15 @@
         border: 1px solid #000;
         background: #fff;
         cursor: pointer;
+      }
+
+      button.stepper-button {
+        width: 28px;
+        min-width: 28px;
+        height: 18px;
+        padding: 0;
+        font-size: 11px;
+        line-height: 1;
       }
 
       .labels {
@@ -224,16 +280,28 @@
         <div class="field">
           <label for="prefix">Präfix</label>
           <input id="prefix" type="text" value="L3NS01" />
+          <label class="inline-checkbox" for="hidePrefixInLabel">
+            <input id="hidePrefixInLabel" type="checkbox" />
+            Nicht im Label anzeigen
+          </label>
         </div>
 
         <div class="field">
           <label for="middle">Fester Block</label>
           <input id="middle" type="text" value="001" />
+          <label class="inline-checkbox" for="hideMiddleInLabel">
+            <input id="hideMiddleInLabel" type="checkbox" />
+            Nicht im Label anzeigen
+          </label>
         </div>
 
         <div class="field">
           <label for="suffix">Suffix</label>
           <input id="suffix" type="text" value="" />
+          <label class="inline-checkbox" for="hideSuffixInLabel">
+            <input id="hideSuffixInLabel" type="checkbox" />
+            Nicht im Label anzeigen
+          </label>
         </div>
 
         <div class="field">
@@ -253,22 +321,110 @@
 
         <div class="field">
           <label for="labelWidth">Etikettenbreite</label>
-          <input id="labelWidth" type="text" value="19cm" />
+          <div class="input-with-stepper" data-stepper-for="labelWidth">
+            <div class="stepper-buttons" aria-hidden="false">
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="labelWidth"
+                data-step-direction="up"
+                aria-label="labelWidth erhöhen"
+              >
+                ▲
+              </button>
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="labelWidth"
+                data-step-direction="down"
+                aria-label="labelWidth verringern"
+              >
+                ▼
+              </button>
+            </div>
+            <input id="labelWidth" type="text" value="19cm" />
+          </div>
         </div>
 
         <div class="field">
           <label for="labelHeight">Etikettenhöhe</label>
-          <input id="labelHeight" type="text" value="5.4cm" />
+          <div class="input-with-stepper" data-stepper-for="labelHeight">
+            <div class="stepper-buttons" aria-hidden="false">
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="labelHeight"
+                data-step-direction="up"
+                aria-label="labelHeight erhöhen"
+              >
+                ▲
+              </button>
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="labelHeight"
+                data-step-direction="down"
+                aria-label="labelHeight verringern"
+              >
+                ▼
+              </button>
+            </div>
+            <input id="labelHeight" type="text" value="5.4cm" />
+          </div>
         </div>
 
         <div class="field">
           <label for="barcodeAreaWidth">Barcode-Bereich Breite</label>
-          <input id="barcodeAreaWidth" type="text" value="6.5cm" />
+          <div class="input-with-stepper" data-stepper-for="barcodeAreaWidth">
+            <div class="stepper-buttons" aria-hidden="false">
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="barcodeAreaWidth"
+                data-step-direction="up"
+                aria-label="barcodeAreaWidth erhöhen"
+              >
+                ▲
+              </button>
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="barcodeAreaWidth"
+                data-step-direction="down"
+                aria-label="barcodeAreaWidth verringern"
+              >
+                ▼
+              </button>
+            </div>
+            <input id="barcodeAreaWidth" type="text" value="6.5cm" />
+          </div>
         </div>
 
         <div class="field">
           <label for="barcodeHeight">Barcode-Höhe</label>
-          <input id="barcodeHeight" type="text" value="3.2cm" />
+          <div class="input-with-stepper" data-stepper-for="barcodeHeight">
+            <div class="stepper-buttons" aria-hidden="false">
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="barcodeHeight"
+                data-step-direction="up"
+                aria-label="barcodeHeight erhöhen"
+              >
+                ▲
+              </button>
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="barcodeHeight"
+                data-step-direction="down"
+                aria-label="barcodeHeight verringern"
+              >
+                ▼
+              </button>
+            </div>
+            <input id="barcodeHeight" type="text" value="3.2cm" />
+          </div>
         </div>
 
         <div class="field">
@@ -278,22 +434,110 @@
 
         <div class="field">
           <label for="labelFontSize">Schriftgröße Label</label>
-          <input id="labelFontSize" type="text" value="39pt" />
+          <div class="input-with-stepper" data-stepper-for="labelFontSize">
+            <div class="stepper-buttons" aria-hidden="false">
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="labelFontSize"
+                data-step-direction="up"
+                aria-label="labelFontSize erhöhen"
+              >
+                ▲
+              </button>
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="labelFontSize"
+                data-step-direction="down"
+                aria-label="labelFontSize verringern"
+              >
+                ▼
+              </button>
+            </div>
+            <input id="labelFontSize" type="text" value="39pt" />
+          </div>
         </div>
 
         <div class="field">
           <label for="barcodeTextSize">Schriftgröße Barcode-Text</label>
-          <input id="barcodeTextSize" type="text" value="14pt" />
+          <div class="input-with-stepper" data-stepper-for="barcodeTextSize">
+            <div class="stepper-buttons" aria-hidden="false">
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="barcodeTextSize"
+                data-step-direction="up"
+                aria-label="barcodeTextSize erhöhen"
+              >
+                ▲
+              </button>
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="barcodeTextSize"
+                data-step-direction="down"
+                aria-label="barcodeTextSize verringern"
+              >
+                ▼
+              </button>
+            </div>
+            <input id="barcodeTextSize" type="text" value="14pt" />
+          </div>
         </div>
 
         <div class="field">
           <label for="labelPadding">Innenabstand Etikette</label>
-          <input id="labelPadding" type="text" value="0.35cm 0.45cm" />
+          <div class="input-with-stepper" data-stepper-for="labelPadding">
+            <div class="stepper-buttons" aria-hidden="false">
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="labelPadding"
+                data-step-direction="up"
+                aria-label="labelPadding erhöhen"
+              >
+                ▲
+              </button>
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="labelPadding"
+                data-step-direction="down"
+                aria-label="labelPadding verringern"
+              >
+                ▼
+              </button>
+            </div>
+            <input id="labelPadding" type="text" value="0.35cm 0.45cm" />
+          </div>
         </div>
 
         <div class="field">
           <label for="barcodeGap">Abstand im Barcode-Bereich</label>
-          <input id="barcodeGap" type="text" value="0.12cm" />
+          <div class="input-with-stepper" data-stepper-for="barcodeGap">
+            <div class="stepper-buttons" aria-hidden="false">
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="barcodeGap"
+                data-step-direction="up"
+                aria-label="barcodeGap erhöhen"
+              >
+                ▲
+              </button>
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="barcodeGap"
+                data-step-direction="down"
+                aria-label="barcodeGap verringern"
+              >
+                ▼
+              </button>
+            </div>
+            <input id="barcodeGap" type="text" value="0.12cm" />
+          </div>
         </div>
 
         <div class="field checkbox-field">
@@ -315,7 +559,29 @@
 
         <div class="field">
           <label for="topLabelSize">Schriftgröße Label oben</label>
-          <input id="topLabelSize" type="text" value="15pt" />
+          <div class="input-with-stepper" data-stepper-for="topLabelSize">
+            <div class="stepper-buttons" aria-hidden="false">
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="topLabelSize"
+                data-step-direction="up"
+                aria-label="topLabelSize erhöhen"
+              >
+                ▲
+              </button>
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="topLabelSize"
+                data-step-direction="down"
+                aria-label="topLabelSize verringern"
+              >
+                ▼
+              </button>
+            </div>
+            <input id="topLabelSize" type="text" value="15pt" />
+          </div>
         </div>
 
         <div class="field">
@@ -329,12 +595,56 @@
 
         <div class="field">
           <label for="arrowSize">Größe Freccia</label>
-          <input id="arrowSize" type="text" value="22pt" />
+          <div class="input-with-stepper" data-stepper-for="arrowSize">
+            <div class="stepper-buttons" aria-hidden="false">
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="arrowSize"
+                data-step-direction="up"
+                aria-label="arrowSize erhöhen"
+              >
+                ▲
+              </button>
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="arrowSize"
+                data-step-direction="down"
+                aria-label="arrowSize verringern"
+              >
+                ▼
+              </button>
+            </div>
+            <input id="arrowSize" type="text" value="22pt" />
+          </div>
         </div>
 
         <div class="field">
           <label for="arrowGap">Abstand Freccia/Text</label>
-          <input id="arrowGap" type="text" value="0.18cm" />
+          <div class="input-with-stepper" data-stepper-for="arrowGap">
+            <div class="stepper-buttons" aria-hidden="false">
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="arrowGap"
+                data-step-direction="up"
+                aria-label="arrowGap erhöhen"
+              >
+                ▲
+              </button>
+              <button
+                class="stepper-button"
+                type="button"
+                data-step-target="arrowGap"
+                data-step-direction="down"
+                aria-label="arrowGap verringern"
+              >
+                ▼
+              </button>
+            </div>
+            <input id="arrowGap" type="text" value="0.18cm" />
+          </div>
         </div>
       </div>
 
@@ -362,10 +672,89 @@
           .replace(/'/g, "&#039;");
       }
 
+      const stepperSettings = {
+        labelWidth: { step: 0.1, min: 0 },
+        labelHeight: { step: 0.1, min: 0 },
+        barcodeAreaWidth: { step: 0.1, min: 0 },
+        barcodeHeight: { step: 0.1, min: 0 },
+        labelFontSize: { step: 1, min: 1 },
+        barcodeTextSize: { step: 1, min: 1 },
+        labelPadding: { step: 0.05, min: 0 },
+        barcodeGap: { step: 0.01, min: 0 },
+        topLabelSize: { step: 1, min: 1 },
+        arrowSize: { step: 1, min: 1 },
+        arrowGap: { step: 0.01, min: 0 },
+      };
+
+      function decimalPlaces(value) {
+        const parts = String(value).split(".");
+        return parts.length > 1 ? parts[1].length : 0;
+      }
+
+      function adjustNumericTextValue(value, direction, settings) {
+        const step = settings.step;
+        const min = settings.min;
+        const precision = decimalPlaces(step);
+        const numberPattern = /-?\d+(?:\.\d+)?/g;
+        let foundNumber = false;
+
+        const adjustedValue = value.replace(numberPattern, (numberText) => {
+          foundNumber = true;
+          const currentValue = parseFloat(numberText);
+          const nextValue = Math.max(min, currentValue + direction * step);
+          const decimals = Math.max(decimalPlaces(numberText), precision);
+          return nextValue.toFixed(decimals).replace(/\.?0+$/, "");
+        });
+
+        return foundNumber ? adjustedValue : value;
+      }
+
+      function setupAutoGenerateControls() {
+        const controls = document.querySelector(".controls");
+
+        controls.addEventListener("input", (event) => {
+          if (event.target.matches("input, select")) {
+            generateLabels();
+          }
+        });
+
+        controls.addEventListener("change", (event) => {
+          if (event.target.matches("input, select")) {
+            generateLabels();
+          }
+        });
+
+        controls.addEventListener("click", (event) => {
+          const button = event.target.closest(".stepper-button");
+          if (!button) {
+            return;
+          }
+
+          const input = document.getElementById(button.dataset.stepTarget);
+          const settings = stepperSettings[button.dataset.stepTarget];
+          if (!input || !settings) {
+            return;
+          }
+
+          const direction = button.dataset.stepDirection === "up" ? 1 : -1;
+          input.value = adjustNumericTextValue(input.value, direction, settings);
+          generateLabels();
+        });
+      }
+
       function generateLabels() {
         const prefix = document.getElementById("prefix").value.trim();
         const middle = document.getElementById("middle").value.trim();
         const suffix = document.getElementById("suffix").value.trim();
+        const hidePrefixInLabel = document.getElementById(
+          "hidePrefixInLabel",
+        ).checked;
+        const hideMiddleInLabel = document.getElementById(
+          "hideMiddleInLabel",
+        ).checked;
+        const hideSuffixInLabel = document.getElementById(
+          "hideSuffixInLabel",
+        ).checked;
 
         const digits = parseInt(document.getElementById("digits").value, 10);
         const start = parseInt(document.getElementById("start").value, 10);
@@ -450,8 +839,15 @@
         for (let i = start; i <= end; i++) {
           const progressive = padNumber(i, digits);
 
-          const labelParts = [prefix, middle, progressive];
-          if (suffix !== "") {
+          const labelParts = [];
+          if (!hidePrefixInLabel && prefix !== "") {
+            labelParts.push(prefix);
+          }
+          if (!hideMiddleInLabel && middle !== "") {
+            labelParts.push(middle);
+          }
+          labelParts.push(progressive);
+          if (!hideSuffixInLabel && suffix !== "") {
             labelParts.push(suffix);
           }
 
@@ -507,6 +903,7 @@
         }
       }
 
+      setupAutoGenerateControls();
       generateLabels();
     </script>
   </body>
