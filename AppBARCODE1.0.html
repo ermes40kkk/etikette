@@ -170,8 +170,9 @@
         display: none;
         width: 100%;
         font-size: var(--top-label-size, 15pt);
-        font-weight: 700;
+        font-weight: 200;
         line-height: 1;
+		letter-spacing: -1px;
         text-align: center;
         overflow-wrap: anywhere;
       }
@@ -206,7 +207,7 @@
 
       .barcode-text {
         font-size: var(--barcode-text-size, 14pt);
-        font-weight: 700;
+        font-weight: 500;
         line-height: 1;
         text-align: center;
         overflow-wrap: anywhere;
@@ -215,8 +216,14 @@
       .arrow-indicator {
         display: none;
         font-size: var(--arrow-size, 22pt);
-        font-weight: 700;
-        line-height: 1;
+		
+		  font-family: Arial, sans-serif;
+  font-weight: 200;
+
+  margin-left: 0.08em;
+  line-height: 1;
+  transform: translateY(0.05em);
+
       }
 
       .has-arrow .arrow-indicator {
@@ -239,7 +246,8 @@
         justify-content: center;
         text-align: left;
         font-size: var(--label-font-size, 39pt);
-        font-weight: 700;
+        font-weight: 500;
+		letter-spacing: -1px;
         line-height: 1.05;
         overflow-wrap: anywhere;
         padding-left: 0.3cm;
@@ -279,7 +287,7 @@
       <div class="grid">
         <div class="field">
           <label for="prefix">Präfix</label>
-          <input id="prefix" type="text" value="L3NS01" />
+          <input id="prefix" type="text" value="M1KO01" />
           <label class="inline-checkbox" for="hidePrefixInLabel">
             <input id="hidePrefixInLabel" type="checkbox" />
             Nicht im Label anzeigen
@@ -297,7 +305,7 @@
 
         <div class="field">
           <label for="suffix">Suffix</label>
-          <input id="suffix" type="text" value="" />
+          <input id="suffix" type="text" value="20" />
           <label class="inline-checkbox" for="hideSuffixInLabel">
             <input id="hideSuffixInLabel" type="checkbox" />
             Nicht im Label anzeigen
@@ -342,7 +350,7 @@
                 ▼
               </button>
             </div>
-            <input id="labelWidth" type="text" value="19cm" />
+            <input id="labelWidth" type="text" value="29.8cm" />
           </div>
         </div>
 
@@ -369,7 +377,7 @@
                 ▼
               </button>
             </div>
-            <input id="labelHeight" type="text" value="5.4cm" />
+            <input id="labelHeight" type="text" value="10.53cm" />
           </div>
         </div>
 
@@ -396,7 +404,7 @@
                 ▼
               </button>
             </div>
-            <input id="barcodeAreaWidth" type="text" value="6.5cm" />
+            <input id="barcodeAreaWidth" type="text" value="10.5cm" />
           </div>
         </div>
 
@@ -423,13 +431,13 @@
                 ▼
               </button>
             </div>
-            <input id="barcodeHeight" type="text" value="3.2cm" />
+            <input id="barcodeHeight" type="text" value="5.4cm" />
           </div>
         </div>
 
         <div class="field">
           <label for="barWidth">Strichbreite Barcode</label>
-          <input id="barWidth" type="number" value="1.8" min="0.5" step="0.1" />
+          <input id="barWidth" type="number" value="1.2" min="0.5" step="0.1" />
         </div>
 
         <div class="field">
@@ -455,7 +463,7 @@
                 ▼
               </button>
             </div>
-            <input id="labelFontSize" type="text" value="39pt" />
+            <input id="labelFontSize" type="text" value="89pt" />
           </div>
         </div>
 
@@ -536,7 +544,7 @@
                 ▼
               </button>
             </div>
-            <input id="barcodeGap" type="text" value="0.12cm" />
+            <input id="barcodeGap" type="text" value="0.19cm" />
           </div>
         </div>
 
@@ -547,15 +555,15 @@
 
         <div class="field checkbox-field">
           <label for="showTopBarcodeLabel"
-            >Neue Label über Barcode anzeigen</label
+            >Präfix über Barcode anzeigen</label
           >
           <input id="showTopBarcodeLabel" type="checkbox" />
         </div>
 
-        <div class="field">
+<!--         <div class="field">
           <label for="topBarcodeLabel">Text Label über Barcode</label>
           <input id="topBarcodeLabel" type="text" value="MAGAZZINO" />
-        </div>
+        </div> -->
 
         <div class="field">
           <label for="topLabelSize">Schriftgröße Label oben</label>
@@ -580,7 +588,7 @@
                 ▼
               </button>
             </div>
-            <input id="topLabelSize" type="text" value="15pt" />
+            <input id="topLabelSize" type="text" value="76pt" />
           </div>
         </div>
 
@@ -616,7 +624,7 @@
                 ▼
               </button>
             </div>
-            <input id="arrowSize" type="text" value="22pt" />
+            <input id="arrowSize" type="text" value="78pt" />
           </div>
         </div>
 
@@ -643,7 +651,7 @@
                 ▼
               </button>
             </div>
-            <input id="arrowGap" type="text" value="0.18cm" />
+            <input id="arrowGap" type="text" value="0.22cm" />
           </div>
         </div>
       </div>
@@ -782,12 +790,12 @@
         const showTextUnderBarcode = document.getElementById(
           "showTextUnderBarcode",
         ).checked;
-        const showTopBarcodeLabel = document.getElementById(
+       const showTopBarcodeLabel = document.getElementById(
           "showTopBarcodeLabel",
         ).checked;
-        const topBarcodeLabel = document
-          .getElementById("topBarcodeLabel")
-          .value.trim();
+    //    const topBarcodeLabel = document
+    //      .getElementById("topBarcodeLabel")
+    //      .value.trim();
         const topLabelSize = document
           .getElementById("topLabelSize")
           .value.trim();
@@ -863,15 +871,15 @@
             label.classList.add("show-barcode-text");
           }
 
-          if (showTopBarcodeLabel && topBarcodeLabel !== "") {
+          if (showTopBarcodeLabel && prefix !== "") {
             label.classList.add("show-top-label");
           }
 
           const arrowSymbol =
             arrowDirection === "up"
-              ? "↑"
+              ? "⬆︎"
               : arrowDirection === "down"
-                ? "↓"
+                ? "⬇︎"
                 : "";
           if (arrowSymbol !== "") {
             label.classList.add("has-arrow");
