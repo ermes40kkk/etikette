@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code128 Etiketten Generator</title>
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 12mm;
+      color: #000;
+    }
+
+    .controls {
+      border: 2px solid #000;
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+
+    .controls h2 {
+      margin: 0 0 12px 0;
+      font-size: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(160px, 1fr));
+      gap: 10px 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .field.checkbox-field {
+      justify-content: flex-end;
+    }
+
+    .field label {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .field input[type="text"],
+    .field input[type="number"] {
+      padding: 7px 8px;
+      font-size: 14px;
+      border: 1px solid #000;
+    }
+
+    .field input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 8px;
+    }
+
+    .actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 9px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      border: 1px solid #000;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .labels {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .label {
+      width: var(--label-width, 19cm);
+      height: var(--label-height, 5.4cm);
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      padding: 0.35cm 0.45cm;
+      border: 2px solid #000;
+      overflow: hidden;
+      page-break-inside: avoid;
+      break-inside: avoid;
+      margin: 0;
+    }
+
+.barcode-area {
+  width: var(--barcode-area-width, 6.5cm);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.show-barcode-text .barcode-area {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+    .barcode-svg {
+      width: 100%;
+      height: var(--barcode-height, 3.2cm);
+      flex-shrink: 0;
+    }
+
+.show-barcode-text .barcode-svg {
+  width: auto;
+  max-width: 100%;
+}
+.barcode-text {
+  margin-top: 0.15cm;
+  font-size: var(--barcode-text-size, 14pt);
+  font-weight: 700;
+  line-height: 1;
+  display: none;
+}
+
+.show-barcode-text .barcode-text {
+  display: block;
+  text-align: center;
+  width: 100%;
+}
+
+.show-barcode-text .text-area {
+  display: none;
+}
+
+    .text-area {
+      width: calc(100% - var(--barcode-area-width, 6.5cm) - 0.5cm);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: left;
+      font-size: var(--label-font-size, 39pt);
+      font-weight: 700;
+      line-height: 1.05;
+      overflow-wrap: anywhere;
+      padding-left: 0.3cm;
+    }
+
+    @page {
+      size: auto;
+      margin: 0;
+    }
+
+    @media print {
+      body {
+        margin: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .controls {
+        display: none !important;
+      }
+
+      .labels {
+        gap: 0 !important;
+      }
+
+      .label {
+        border: 2px solid #000 !important;
+        margin: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <h2>Etiketten-Einstellungen</h2>
+
+    <div class="grid">
+      <div class="field">
+        <label for="prefix">Präfix</label>
+        <input id="prefix" type="text" value="L3NS01" />
+      </div>
+
+      <div class="field">
+        <label for="middle">Fester Block</label>
+        <input id="middle" type="text" value="001" />
+      </div>
+
+      <div class="field">
+        <label for="suffix">Suffix</label>
+        <input id="suffix" type="text" value="" />
+      </div>
+
+      <div class="field">
+        <label for="digits">Stellen laufende Nummer</label>
+        <input id="digits" type="number" value="3" min="1" max="6" />
+      </div>
+
+      <div class="field">
+        <label for="start">Startnummer</label>
+        <input id="start" type="number" value="1" min="0" />
+      </div>
+
+      <div class="field">
+        <label for="end">Endnummer</label>
+        <input id="end" type="number" value="64" min="0" />
+      </div>
+
+      <div class="field">
+        <label for="labelWidth">Etikettenbreite</label>
+        <input id="labelWidth" type="text" value="19cm" />
+      </div>
+
+      <div class="field">
+        <label for="labelHeight">Etikettenhöhe</label>
+        <input id="labelHeight" type="text" value="5.4cm" />
+      </div>
+
+      <div class="field">
+        <label for="barcodeAreaWidth">Barcode-Bereich Breite</label>
+        <input id="barcodeAreaWidth" type="text" value="6.5cm" />
+      </div>
+
+      <div class="field">
+        <label for="barcodeHeight">Barcode-Höhe</label>
+        <input id="barcodeHeight" type="text" value="3.2cm" />
+      </div>
+
+      <div class="field">
+        <label for="barWidth">Strichbreite Barcode</label>
+        <input id="barWidth" type="number" value="1.8" min="0.5" step="0.1" />
+      </div>
+
+      <div class="field">
+        <label for="labelFontSize">Schriftgröße Label</label>
+        <input id="labelFontSize" type="text" value="39pt" />
+      </div>
+
+      <div class="field">
+        <label for="barcodeTextSize">Schriftgröße unter Barcode</label>
+        <input id="barcodeTextSize" type="text" value="14pt" />
+      </div>
+
+      <div class="field checkbox-field">
+        <label for="showTextUnderBarcode">Label unter Barcode anzeigen</label>
+        <input id="showTextUnderBarcode" type="checkbox" />
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="button" onclick="generateLabels()">Etiketten erzeugen</button>
+      <button type="button" onclick="window.print()">Drucken</button>
+    </div>
+  </div>
+
+  <div id="labels" class="labels"></div>
+
+  <script>
+    function padNumber(value, digits) {
+      return String(value).padStart(digits, "0");
+    }
+
+    function generateLabels() {
+      const prefix = document.getElementById("prefix").value.trim();
+      const middle = document.getElementById("middle").value.trim();
+      const suffix = document.getElementById("suffix").value.trim();
+
+      const digits = parseInt(document.getElementById("digits").value, 10);
+      const start = parseInt(document.getElementById("start").value, 10);
+      const end = parseInt(document.getElementById("end").value, 10);
+
+      const labelWidth = document.getElementById("labelWidth").value.trim();
+      const labelHeight = document.getElementById("labelHeight").value.trim();
+      const barcodeAreaWidth = document.getElementById("barcodeAreaWidth").value.trim();
+      const barcodeHeight = document.getElementById("barcodeHeight").value.trim();
+      const barWidth = parseFloat(document.getElementById("barWidth").value);
+      const labelFontSize = document.getElementById("labelFontSize").value.trim();
+      const barcodeTextSize = document.getElementById("barcodeTextSize").value.trim();
+      const showTextUnderBarcode = document.getElementById("showTextUnderBarcode").checked;
+
+      const labelsContainer = document.getElementById("labels");
+      labelsContainer.innerHTML = "";
+
+      document.documentElement.style.setProperty("--label-width", labelWidth);
+      document.documentElement.style.setProperty("--label-height", labelHeight);
+      document.documentElement.style.setProperty("--barcode-area-width", barcodeAreaWidth);
+      document.documentElement.style.setProperty("--barcode-height", barcodeHeight);
+      document.documentElement.style.setProperty("--label-font-size", labelFontSize);
+      document.documentElement.style.setProperty("--barcode-text-size", barcodeTextSize);
+
+      if (isNaN(start) || isNaN(end) || isNaN(digits) || start > end) {
+        alert("Bitte Startnummer, Endnummer und Stellen prüfen.");
+        return;
+      }
+
+      for (let i = start; i <= end; i++) {
+        const progressive = padNumber(i, digits);
+
+        const labelParts = [prefix, middle, progressive];
+        if (suffix !== "") {
+          labelParts.push(suffix);
+        }
+
+        const labelText = labelParts.join("-");
+        const barcodeText = `${prefix}${middle}${progressive}${suffix}`;
+
+        const label = document.createElement("div");
+        label.className = "label";
+
+        if (showTextUnderBarcode) {
+          label.classList.add("show-barcode-text");
+        }
+
+        const barcodeId = `barcode-${i}`;
+
+label.innerHTML = `
+  <div class="barcode-area">
+    <svg id="${barcodeId}" class="barcode-svg"></svg>
+    <div class="barcode-text">${labelText}</div>
+  </div>
+  ${showTextUnderBarcode ? '' : `<div class="text-area">${labelText}</div>`}
+`;
+
+        labelsContainer.appendChild(label);
+
+        JsBarcode(`#${barcodeId}`, barcodeText, {
+          format: "CODE128",
+          displayValue: false,
+          height: 80,
+          width: barWidth,
+          margin: 0
+        });
+      }
+    }
+
+    generateLabels();
+  </script>
+</body>
+</html>
