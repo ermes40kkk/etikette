@@ -458,7 +458,7 @@
           const labelText = labelParts.join("-");
           const barcodeText = `${prefix}${middle}${progressive}${suffix}`;
           const safeLabelText = escapeHtml(labelText);
-          const safeTopBarcodeLabel = escapeHtml(topBarcodeLabel);
+          const safeTopBarcodeLabel =  prefix ;  // escapeHtml(topBarcodeLabel);
 
           const label = document.createElement("div");
           label.className = "label";
@@ -488,11 +488,11 @@
     <div class="top-barcode-label">${safeTopBarcodeLabel}</div>
     <svg id="${barcodeId}" class="barcode-svg"></svg>
     <div class="barcode-text-row">
-      <span class="arrow-indicator">${arrowSymbol}</span>
       <span class="barcode-text">${safeLabelText}</span>
+	  <span class="arrow-indicator">${arrowSymbol}</span>
     </div>
   </div>
-  ${showTextUnderBarcode ? "" : `<div class="text-area">${safeLabelText}</div>`}
+  ${showTextUnderBarcode ? "" : `<div class="text-area">${safeLabelText}  <span class="arrow-indicator">${arrowSymbol}</span></div>`}
 `;
 
           labelsContainer.appendChild(label);
